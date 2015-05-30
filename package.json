@@ -1,0 +1,26 @@
+{
+  "name": "philz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.12.4",
+    "node-env-file": "^0.1.7",
+    "querystring": "^0.2.0",
+    "request": "^2.56.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colinman/philz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colinman/philz/issues"
+  },
+  "homepage": "https://github.com/colinman/philz"
+}
