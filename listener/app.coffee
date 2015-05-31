@@ -56,7 +56,7 @@ listen = ->
             if used?.body?
               time = moment.utc(used.body.query_time * 1000).format("mm:ss")
               unirest.get("http://localhost:8888/play?id=#{used.body.track_spotify_id}&start=#{time}").header("Accept", "application/json").end()
-              console.log "Sent request to play #{used.body.track_spotify_id} at #{time}"
+              console.log "Sent request to play #{used.body.query} at #{time}"
               setBGColor 'bgGreen'
     listening = false              
     listen()
