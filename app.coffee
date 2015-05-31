@@ -7,7 +7,6 @@ env = require 'node-env-file'
 env __dirname + '/.env'
 
 # Spotify secrets
-client_id = process.env.client_id
 client_secret = process.env.client_secret
 redirect_uri = 'http://localhost:8888/callback'
 

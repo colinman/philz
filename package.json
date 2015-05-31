@@ -9,7 +9,9 @@
     "querystring": "^0.2.0",
     "request": "^2.56.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "coffee-script": "^1.9.3"
+  },
   "scripts": {
     "test": "node app.js"
   },
