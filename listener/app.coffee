@@ -19,7 +19,7 @@ listening = false
 
 duration = 5 # seconds of recording
 high_t = 800
-low_t = 15 # words per million
+low_t = 3 # words per million
 
 recordFile = ->
   child = spawn "./sox", ["-dp", "trim", "0", "#{duration}"]
