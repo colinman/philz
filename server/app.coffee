@@ -14,3 +14,10 @@ require('./spotify')(app, (req, res, access_token, refresh_token, optional={}) -
 
 console.log 'Listening on 8888'
 app.listen(8888)
+
+# spotify test
+sys = require 'sys'
+spawn = require('child_process').spawn
+spawn "spotify", ["play", "spotify:track:3ssX20QT5c3nA9wk78V1LQ"]
+spawn "spotify", ["pause"]
+spawn "spotify", ["jump", "0:25"]
