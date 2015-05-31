@@ -69,9 +69,23 @@ module.exports = (app, cb) ->
         'Authorization': "Bearer #{access_token}"
       json: true
     request.get options, (error, response, body) ->
-      console.log req.query['start']
       spawn 'spotify', ['play', body['uri']]
       spawn "spotify", ["jump", req.query['start']]
+      cb = ()->spawn('spotify', ['play', "spotify:user:#{process.env.spotify_owner_id}:playlist:#{process.env['spotify_playlist_id']}"])
+      setTimeout cb 10000
+
+  app.get '/search', (req, res) ->
+    options =
+      url: "https://api.spotify.com/v1/search?q=#{req.query['title']}&type=track&limit=3"
+      headers:
+        'Accept': 'application/json'
+        'Authorization': "Bearer #{access_token}"
+      json: true
+    request.get options, (error, response, body) ->
+      if !error && response.statusCode == 200
+        res.send body
+      else if response.statusCode == 401
+        res.send 'GET YO AUTHORIZATION'
 
 
 
