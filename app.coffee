@@ -8,14 +8,11 @@ env __dirname + '/.env'
 
 # Spotify secrets
 client_secret = process.env.client_secret
-
 app = module.exports = express()
 
 app.use(express.static(__dirname + '/public'))
 
 require('./spotify')(app, (token) -> console.log token)
-
-app.get '/testhello', (req, res) -> res.send test:'test'
 
 console.log 'Listening on 8888'
 app.listen(8888)
