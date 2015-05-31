@@ -14,12 +14,12 @@
       }
     });
     
-    request.open('GET', POSTS_URL + '/queue');
+    request.open('GET', '/callback');
     request.send();
   };
 
 
-  PostModel.enqueueSong = function(post, callback) {
+  PostModel.add = function(post, callback) {
     var request = new XMLHttpRequest();
     request.addEventListener('load', function() {
       if (request.status != STATUS_OK) callback(request.responseText);

@@ -17,12 +17,11 @@
       if (request.status != STATUS_OK) callback(request.responseText); 
       else {
         var results = JSON.parse(request.responseText);
-        callback(null, results);
+        callback(null, results.tracks.items);
       }
     });
-    request.open('GET', SEARCH_URL + '?query=' + encodeURIComponent(query));
+    request.open('GET', '/search?title=' + encodeURIComponent(query));
     request.send();
-
   };
   
   window.SearchModel = SearchModel;
