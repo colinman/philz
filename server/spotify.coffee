@@ -1,9 +1,12 @@
 querystring = require 'querystring'
-
+cookieParser = require 'cookie-parser'
+request = require 'request'
 module.exports = (app, cb) ->
-  client_id = process.env.client_id
+  # Spotify secrets
+  client_id = process.env.spotify_client_id
+  client_secret = process.env.spotify_client_secret
   redirect_uri = 'http://localhost:8888/callback'
-  
+
   generateRandomString = (length) ->
     text = ''
     possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -11,9 +14,10 @@ module.exports = (app, cb) ->
     for i in [0..length] by 1
       text += possible.charAt(Math.floor(Math.random() * possible.length))
     return text;
-
+  stateKey = 'spotify_auth_state'
   app.get '/login', (req, res) ->
     state = generateRandomString(16)
+    res.cookie stateKey, state
     scope = 'playlist-read-private playlist-read-collaborative'
     query = querystring.stringify
         response_type: 'code'
@@ -25,5 +29,23 @@ module.exports = (app, cb) ->
     res.redirect "https://accounts.spotify.com/authorize?#{query}"
 
   app.get '/callback', (req, res) ->
-    cb 'works!'
-    res.send hello:'hello!'
+    code = req.query.code || null
+    state = req.query.state || null
+    storedState = if req.cookies then req.cookies[stateKey] else null
+    res.clearCookie stateKey
+    # removed check
+    authOptions =
+        url: 'https://accounts.spotify.com/api/token'
+        form:
+          code: code
+          redirect_uri: redirect_uri
+          grant_type: 'authorization_code'
+        headers:
+          'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        json: true
+    request.post authOptions, (error, response, body) ->
+      if !error && response.statusCode == 200
+          access_token = body.access_token
+          refresh_token = body.refresh_token
+          cb req, res, access_token, refresh_token
+
