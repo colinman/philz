@@ -6,8 +6,10 @@ speech = require 'google-speech-api'
 env = require 'node-env-file'
 env __dirname + '/.env'
 
+duration = 10
+
 recordFile = (num) ->
-  child = spawn "./sox", ["-dp", "trim", "0", "2"]
+  child = spawn "./sox", ["-dp", "trim", "0", "#{duration}"]
   child.stderr.on 'data', (data) -> console.log "STDERR: #{data}"
   child.on 'exit', (code) -> console.log "Exited with code #{code}"
   child
@@ -21,10 +23,5 @@ listen = (num) ->
   child.stdout.pipe(speech(opts, (err, results) ->
     console.log 'done!'
     console.log err
-    console.log results))    
-  # setTimeout ->
-  #   console.log "Recording recording#{num}.wav done"
-  #   listen(++num)
-  # , 10000
-
+    console.log results[0].result[0].alternative))
 listen(0)
