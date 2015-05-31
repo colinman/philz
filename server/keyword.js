@@ -57,15 +57,15 @@ module.exports = function(app) {
 
               // return track_spotify_id, time
               if (track_spotify_id && track_spotify_id != "") {
-                response.json(200, {'track_spotify_id': track_spotify_id, 'query_time': query_time});
+                response.json(200, {'query': query, 'track_spotify_id': track_spotify_id, 'query_time': query_time});
                 word_queue = [];
-              }
-              word_queue.shift();
+              } else word_queue.shift();
               STATUS = true;
             });
           }
 
           var path = LYRICS_SEARCH_PATH + 'track_id=' + track_id + '&format=json&apikey=' + API_KEY;
+          console.log(path);
           var options = {
             'host': HOST,
             'path': path
@@ -75,7 +75,8 @@ module.exports = function(app) {
         });
       }
 
-      var path = TRACK_SEARCH_PATH + 'q_lyrics=' + query + '&f_has_lyrics=1&format=json&apikey=' + API_KEY;
+      var path = TRACK_SEARCH_PATH + 'q_track=' + query + '&format=json&apikey=' + API_KEY;
+      console.log(path);
       var options = {
         'host': HOST,
         'path': path
