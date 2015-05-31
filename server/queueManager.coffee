@@ -23,7 +23,9 @@ getQueue = (req, res, access_token, refresh_token, optional={}) ->
         'uri':item['track']['uri']
     res.send playlist
 
-modifyPlaylistOptions = (access_token, uris)->
+
+
+addToPlaylist = (req, res, access_token, refresh_token, uris) ->
   query = querystring.stringify uris
   options =
     url: "https://api.spotify.com/v1/users/#{user_id}/playlists/#{playlist_id}/tracks?#{query}"
@@ -31,19 +33,24 @@ modifyPlaylistOptions = (access_token, uris)->
       'Accept': 'application/json'
       'Authorization': "Bearer #{access_token}"
     json: true
-  return options
-
-addToPlaylist = (req, res, access_token, refresh_token, uris) ->
-  options = modifyPlaylistOptions(access_token, uris)
   request.post options, (error, response, body) ->
-    if !error && response.statusCode == 201
-      res.send 'YAYYY'
-    else if response.statusCode == 401
-      res.send 'GET YO AUTHORIZATION'
+  if !error && response.statusCode == 201
+    res.send 'YAYYY'
+  else if response.statusCode == 401
+    res.send 'GET YO AUTHORIZATION'
 
 removeFromPlaylist = (req, res, access_token, refresh_token, uris) ->
-  console.log access_token
-  options = modifyPlaylistOptions(access_token, uris)
+  options =
+    url: "https://api.spotify.com/v1/users/#{user_id}/playlists/#{playlist_id}/tracks"
+    multipart:
+      {
+        'content-type': 'application/json'
+        body: JSON.stringify {"tracks": [uris]}
+      }
+    headers:
+      'Accept': 'application/json'
+      'Authorization': "Bearer #{access_token}"
+    json: true
   console.log options
   request.del options, (error, response, body) ->
     if !error && response.statusCode == 201

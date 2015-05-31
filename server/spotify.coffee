@@ -1,6 +1,9 @@
 querystring = require 'querystring'
 cookieParser = require 'cookie-parser'
 request = require 'request'
+sys = require 'sys'
+spawn = require('child_process').spawn
+
 module.exports = (app, cb) ->
   # Spotify secrets
   client_id = process.env.spotify_client_id
@@ -57,6 +60,20 @@ module.exports = (app, cb) ->
 
   app.get '/remove', (req, res) ->
       require('./queueManager').removeFromPlaylist(req, res, access_token, refresh_token, req.query)
+
+  app.get '/play', (req, res) ->
+    options =
+      url: "https://api.spotify.com/v1/tracks/#{req.query['id']}"
+      headers:
+        'Accept': 'application/json'
+        'Authorization': "Bearer #{access_token}"
+      json: true
+    request.get options, (error, response, body) ->
+      console.log req.query['start']
+      spawn 'spotify', ['play', body['uri']]
+      spawn "spotify", ["jump", req.query['start']]
+
+
 
   app.get '/callback', (req, res) ->
     callback req, res, cb
