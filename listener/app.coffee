@@ -48,7 +48,7 @@ listen = ->
           .header("Accept", "application/json")
           .end (used) ->
             if used?.body?
-              console.log used.body
+              unirest.get("http://localhost:8888/play?uri=#{used.body.track_spotify_id}&start=#{used.body.query_time}").header("Accept", "application/json").end()
               setBGColor 'bgGreen'
     listen()
   ))
