@@ -8,7 +8,7 @@ module.exports = (app, cb) ->
   # Spotify secrets
   client_id = process.env.spotify_client_id
   client_secret = process.env.spotify_client_secret
-  redirect_uri = 'http://localhost:8888/callback'
+  redirect_uri = 'http://192.168.1.32:8888/callback'
   access_token = null
   refresh_token = null
   generateRandomString = (length) ->
