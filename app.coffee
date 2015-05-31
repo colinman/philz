@@ -1,19 +1,18 @@
 express = require 'express'
-request = require 'request'
-querystring = require 'querystring'
 
 # Environment variables
 env = require 'node-env-file'
 env __dirname + '/.env'
 
 # Spotify secrets
-client_secret = process.env.client_secret
 
 app = module.exports = express()
 
 app.use(express.static(__dirname + '/public'))
 
-require('./spotify')(app, (token) -> console.log token)
+require('./spotify')(app, (req, res, access_token, refresh_token) ->
+    require('./queueManager').getQueue(req, res, access_token, refresh_token)
+)
 
 app.get '/testhello', (req, res) -> res.send test:'test'
 
