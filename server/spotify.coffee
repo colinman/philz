@@ -83,6 +83,7 @@ module.exports = (app, cb) ->
       json: true
     request.get options, (error, response, body) ->
       if !error && response.statusCode == 200
+
         res.send body
       else if response.statusCode == 401
         res.send 'GET YO AUTHORIZATION'

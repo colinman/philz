@@ -1,7 +1,10 @@
 body {
   color: #fff;
   font: 16px/1.5 "Cabin", "Helvetica Neue", Helvetica, Arial, Sans-serif;
-  background: #ecf0f1;
+  /*background: #FCD59C;*/
+  background-image: url("https://tctechcrunch2011.files.wordpress.com/2013/05/philz-cupz.jpg");
+  background-size: cover;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -109,10 +112,11 @@ header h1 i.fa {
 
 /*not sure about changing this from newsfeed to playlist*/
 #playlist {
-  width: 90%;
+  width: 1500px;
   min-width: 960px;
   max-width: 1500px;
-  margin: 30px auto;
+  margin-left: -100px;
+  margin-top: 10px;
   color: #444;
 }
 
@@ -120,11 +124,78 @@ header h1 i.fa {
 .playlist {
   float: right;
   width: 70%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  opacity: 0.9;
+}
+
+#current {
+  margin-left: 25px;
+  margin-top: 10px;
+  width: 300px;
+  height: 570px;
+/*  margin: 30px auto;*/
+  color: #444;
+
+  /*border-style: solid;*/
+  /*border-width: 1px;*/
+}
+
+#current img {
+  max-height: 90%;
+  max-width: 90%;
+  margin: 0 auto;
+  display: block;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#current div {
+  margin-top: 15px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  font-weight: normal;
+  font-family: "Parisienne", Cambria, Georgia, Serif;
+  font-size: 125%;
+}
+
+.current-song {
+  margin: 0 auto;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#table-header {
+  display: inline;
+  color: #444;
 }
 
 .table-element {
   float: left;
-  background-color: #939393;
+  /*background-color: #939393;*/
+}
+
+th {
+  background-color: #CC7722;
+}
+
+tr {
+  background-color: #D3D3D3;
+}
+
+tr:hover {
+  background-color: #dbdbdb;
+}
+
+.crop {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#crop-image {
+  max-width: 100%;
 }
 
 

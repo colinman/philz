@@ -11,7 +11,7 @@
   SearchView.render = function($search) {
     $search.submit(function(event) {
       event.preventDefault();
-      var $searchInput = $search.find('input[name="query"]');
+      var $searchInput = $search.find('input[name="query"]'); // check this
       searchAndRenderResults($search, $searchInput.val());
     });
   };
@@ -47,7 +47,7 @@
       if (error) {
         $('.error').text('Failed to add the post.');
       } else {
-        NewsfeedView.renderPost($('#newsfeed'), post, true);
+        // NewsfeedView.renderPost($('#newsfeed'), post, true); CHANGE THIS
       }
     });
   }

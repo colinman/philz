@@ -14,7 +14,7 @@
       <div class="container">
         <h1>
           <i class="fa fa-newspaper-o"></i>
-          Philz Radio
+          Philz Coffee Radio
         </h1>
 
         <form id="search">
@@ -40,8 +40,8 @@
       {{#if results}}
         {{#each results}}
           <div class="result">
-            <img alt="{{ api }}" src="images/{{ api }}.png">
-            <span>{{ title }}</span>
+            <img src="{{ this.album.images.2.url }}">
+            <span>{{ this.name }}</span>
           </div>
         {{/each}}
       {{else}}
@@ -49,20 +49,45 @@
       {{/if}}
     </script>
 
+
     <div id="playlist">
       <table class="playlist"></table>
     </div>
 
+   
+
+    <div id="current">
+    </div>
+
+
+    <script type="text/x-handlebars-template" id="current-song-template">
+      <img src={{image}} class="current-song" style="opacity:0.8">
+      <div class="current-song">{{track_name}}</div>
+      <div class="current-song">{{artists}}</div>
+      <div class="current-song">{{album}}</div>
+    
+      <img src="http://fourseasonsoffilm.com/wp-content/uploads/2015/04/philzlogo.png" style="opacity:0.8;" id="crop-image">
+
+  
+    </script>
+
+
     <script type="text/x-handlebars-template" id="playlist-template">
 
+      <tr>
+        <th>Song</th>
+        <th>Artist</th> 
+        <th>Album</th>
+        <th>Duration</th>
+      </tr>
 
       {{#each songs}}
-        <div id="{{this.track_name}}" style="clear:both">
-          <div class="table-element" align="center">{{this.track_name}}</div>
-          <div class="table-element" align="center">{{this.artists}}</div>
-          <div class="table-element" align="center">{{this.album}}</div>
-          <div class="table-element" align="center">{{this.duration_ms}}</div>
-        </div>
+        <tr>
+          <td align="center">{{this.track_name}}</td>
+          <td align="center">{{this.artists}}</td>
+          <td align="center">{{this.album}}</td>
+          <td align="center">{{this.duration_ms}}</td>
+        </tr>
       {{/each}}
     </script>
 
