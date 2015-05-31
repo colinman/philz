@@ -42,7 +42,7 @@ addToPlaylist = (req, res, access_token, refresh_token, uris) ->
 removeFromPlaylist = (req, res, access_token, refresh_token, uris) ->
   options =
     url: "https://api.spotify.com/v1/users/#{user_id}/playlists/#{playlist_id}/tracks"
-     multipart:
+    multipart:
       {
         'content-type': 'application/json'
         body: JSON.stringify {"tracks": [uris]}
