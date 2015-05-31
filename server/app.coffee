@@ -8,7 +8,7 @@ app = module.exports = express()
 
 app.use(express.static(__dirname + '/public'))
 
-require('./spotify')(app, (req, res, access_token, refresh_token) ->
+require('./spotify')(app, (req, res, access_token, refresh_token, optional={}) ->
     require('./queueManager').getQueue(req, res, access_token, refresh_token)
 )
 
