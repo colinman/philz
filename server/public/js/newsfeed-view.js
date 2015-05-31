@@ -16,6 +16,7 @@
     //   $playlist.html(renderPlaylist({songs: playlist}));
     // });
 
+
     songs.push(
       {
         track_name: 'song',
@@ -39,6 +40,17 @@
     }
 
     $playlist.html(renderPlaylist({songs: songs}));
+
+    // setInterval(function(){
+
+    //   PostModel.getQueue(function(playlist) {
+    //     $playlist.html(renderPlaylist({songs: songs}));
+    //   });
+    //   // $current.html(renderCurrent(song)); figure out how to get current song
+    //   console.log('hi');
+    // }, 3000);
+
+
   };
 
   NewsfeedView.renderCurrent = function($current) {
