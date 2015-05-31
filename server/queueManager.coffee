@@ -24,7 +24,6 @@ getQueue = (req, res, access_token, refresh_token, optional={}) ->
     res.send playlist
 
 
-
 addToPlaylist = (req, res, access_token, refresh_token, uris) ->
   query = querystring.stringify uris
   options =
@@ -34,10 +33,10 @@ addToPlaylist = (req, res, access_token, refresh_token, uris) ->
       'Authorization': "Bearer #{access_token}"
     json: true
   request.post options, (error, response, body) ->
-  if !error && response.statusCode == 201
-    res.send 'YAYYY'
-  else if response.statusCode == 401
-    res.send 'GET YO AUTHORIZATION'
+    if !error && response.statusCode == 201
+      res.send 'YAYYY'
+    else if response.statusCode == 401
+      res.send 'GET YO AUTHORIZATION'
 
 removeFromPlaylist = (req, res, access_token, refresh_token, uris) ->
   options =
