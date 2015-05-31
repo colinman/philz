@@ -75,7 +75,7 @@ module.exports = function(app) {
         });
       }
 
-      var path = TRACK_SEARCH_PATH + 'q_track=' + query + '&f_has_lyrics=1&format=json&apikey=' + API_KEY;
+      var path = TRACK_SEARCH_PATH + 'q_lyrics=' + query + '&f_has_lyrics=1&format=json&apikey=' + API_KEY;
       console.log(path);
       var options = {
         'host': HOST,
