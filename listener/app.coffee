@@ -10,8 +10,8 @@ env = require 'node-env-file'
 env __dirname + '/.env'
 
 duration = 5 # seconds of recording
-high_t = 400
-low_t = 30 # words per million
+high_t = 800
+low_t = 15 # words per million
 
 recordFile = ->
   child = spawn "./sox", ["-dp", "trim", "0", "#{duration}"]
@@ -45,6 +45,5 @@ isKeyword = (word, cb) ->
     else
       frequency = result.body?.frequency?.perMillion
       cb if frequency > low_t and frequency < high_t then word else false
-  cb word
 
 listen()
