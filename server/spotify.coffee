@@ -55,6 +55,9 @@ module.exports = (app, cb) ->
   app.get '/add', (req, res) ->
       require('./queueManager').addToPlaylist(req, res, access_token, refresh_token, req.query)
 
+  app.get '/remove', (req, res) ->
+      require('./queueManager').removeFromPlaylist(req, res, access_token, refresh_token, req.query)
+
   app.get '/callback', (req, res) ->
     callback req, res, cb
 
