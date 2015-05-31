@@ -9,7 +9,7 @@ var STATUS = true;
 module.exports = function(app) {
   var word_queue = [];
 
-  app.post('/keyword', function(request, response) {
+  app.get('/keyword/:word', function(request, response) {
     var word = request.word;
     console.log(request.params)
     console.log(request.body);
