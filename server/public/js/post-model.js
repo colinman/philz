@@ -14,7 +14,7 @@
       }
     });
     
-    request.open('GET', '/callback');
+    request.open('GET', '/playlist');
     request.send();
   };
 

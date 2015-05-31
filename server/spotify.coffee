@@ -55,6 +55,12 @@ module.exports = (app, cb) ->
         state: state
 
     res.redirect "https://accounts.spotify.com/authorize?#{query}"
+
+
+
+#  app.get '/playlist', (req, res) ->
+#      require('./queueManager').getQueue(req, res, access_token, refresh_token)
+
   app.get '/add', (req, res) ->
       require('./queueManager').addToPlaylist(req, res, access_token, refresh_token, req.query)
 
