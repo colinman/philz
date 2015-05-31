@@ -8,7 +8,8 @@ console = require 'better-console'
 _ = require 'underscore'
 moment = require 'moment'
 
-server = 'http://localhost:8888/keyword/'
+host = '192.168.1.32'
+server = "http://#{host}:8888/keyword/"
 
 # Environment variables
 env = require 'node-env-file'
@@ -55,7 +56,7 @@ listen = ->
           .end (used) ->
             if used?.body?
               time = moment.utc(used.body.query_time * 1000).format("mm:ss")
-              unirest.get("http://localhost:8888/play?id=#{used.body.track_spotify_id}&start=#{time}").header("Accept", "application/json").end()
+              unirest.get("http://#{host}:8888/play?id=#{used.body.track_spotify_id}&start=#{time}").header("Accept", "application/json").end()
               console.log "Sent request to play #{used.body.query} at #{time}"
               setBGColor 'bgGreen'
     listening = false              
