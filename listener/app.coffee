@@ -3,6 +3,8 @@ spawn = require('child_process').spawn
 speech = require 'google-speech-api'
 stopwords = require('stopwords').english
 unirest = require 'unirest'
+colors = require 'colors'
+console = require 'better-console'
 _ = require 'underscore'
 
 # Environment variables
@@ -46,4 +48,14 @@ isKeyword = (word, cb) ->
       frequency = result.body?.frequency?.perMillion
       cb if frequency > low_t and frequency < high_t then word else false
 
+setBGColor = (color) ->
+  console.clear()
+  empty_string = "                                                 ";
+  i = 0
+  while i < 1000
+    process.stdout.write empty_string[color]
+    i++
+
 listen()
+# setBGColor 'bgGreen'
+# setBGColor 'bgRed'
