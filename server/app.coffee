@@ -11,7 +11,11 @@ app.use(express.static(__dirname + '/public'))
 require('./keyword.js')(app)
 
 require('./spotify')(app, (req, res, access_token, refresh_token, optional={}) ->
-    require('./queueManager').getQueue(req, res, access_token, refresh_token)
+  queue = require('./queueManager')
+  queue.getQueue(req, res, access_token, refresh_token)
+  
+  app.get '/queue', (request, response) ->
+    queue.getQueue(request, response, access_token, refresh_token)
 )
 
 console.log 'Listening on 8888'
