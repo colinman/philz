@@ -42,22 +42,22 @@ addToPlaylist = (req, res, access_token, refresh_token, uris) ->
 removeFromPlaylist = (req, res, access_token, refresh_token, uris) ->
   options =
     url: "https://api.spotify.com/v1/users/#{user_id}/playlists/#{playlist_id}/tracks"
-    multipart:
-      {
-        'content-type': 'application/json'
-        body: JSON.stringify {"tracks": [uris]}
-      }
+    # multipart:
+    'content-type': 'application/json'
     headers:
       'Accept': 'application/json'
       'Authorization': "Bearer #{access_token}"
+      'Content-Type': 'application/json'
+    body: JSON.stringify {"tracks": [uris]}
     json: true
   console.log options
   request.del options, (error, response, body) ->
     if !error && response.statusCode == 201
       res.send 'YAYYY DELETED'
-    else if response.statusCode == 401
-      res.send 'GET YO AUTHORIZATION'
+    # else if !error && response.statusCode == 401
+    #   res.send 'GET YO AUTHORIZATION'
     else
+      console.log error
       console.log response.statusCode
 module.exports =
   getQueue:getQueue
