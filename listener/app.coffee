@@ -7,6 +7,8 @@ colors = require 'colors'
 console = require 'better-console'
 _ = require 'underscore'
 
+server = 'localhost:8888/keywords/'
+
 # Environment variables
 env = require 'node-env-file'
 env __dirname + '/.env'
@@ -32,7 +34,11 @@ listen = ->
     sentence = results?[0]?.result?[0]?.alternative?[0]?.transcript
     console.log "Finding keywords in #{sentence}"
     for word in sentence.split(" ")
-      isKeyword word, (result) -> if result then console.log "KEYWORD!: #{result}"    
+      isKeyword word, (result) ->
+        if result
+          unirest.get(server + word).end (result) ->
+            if result?.body? then setBGColor 'bgGreen'
+          console.log "KEYWORD!: #{result}"
   ))
 
 isKeyword = (word, cb) ->
@@ -57,5 +63,3 @@ setBGColor = (color) ->
     i++
 
 listen()
-# setBGColor 'bgGreen'
-# setBGColor 'bgRed'
