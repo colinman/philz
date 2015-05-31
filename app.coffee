@@ -13,9 +13,11 @@ redirect_uri = 'http://localhost:8888/callback'
 
 console.log client_id
 
-app = express()
+app = module.exports = express()
 
 app.use(express.static(__dirname + '/public'))
+
+require('spotify')(app)
 
 app.get '/testhello', (req, res) -> res.send test:'test'
 
