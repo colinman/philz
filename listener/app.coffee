@@ -6,6 +6,7 @@ unirest = require 'unirest'
 colors = require 'colors'
 console = require 'better-console'
 _ = require 'underscore'
+moment = require 'moment'
 
 server = 'http://localhost:8888/keyword/'
 
@@ -48,7 +49,9 @@ listen = ->
           .header("Accept", "application/json")
           .end (used) ->
             if used?.body?
-              unirest.get("http://localhost:8888/play?uri=#{used.body.track_spotify_id}&start=#{used.body.query_time}").header("Accept", "application/json").end()
+              time = moment.utc(used.body.query_time * 1000).format("mm:ss")
+              unirest.get("http://localhost:8888/play?id=#{used.body.track_spotify_id}&start=#{time}").header("Accept", "application/json").end()
+              console.log "Sent request to play #{used.body.track_spotify_id} at #{time}"
               setBGColor 'bgGreen'
     listen()
   ))
