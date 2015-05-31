@@ -9,9 +9,18 @@ var STATUS = true;
 module.exports = function(app) {
   var word_queue = [];
 
+<<<<<<< HEAD
   app.post('/keyword', function(request, response) {
     var word = 'sadness';//request.word;
     var frequency = '100'; //request.frequency;
+=======
+  app.get('/keyword/:word', function(request, response) {
+    var word = request.word;
+    console.log(request.params)
+    console.log(request.body);
+    console.log('WORDDDDDDDDDDDD!!!!!!!!!!!');
+    var frequency = request.frequency;
+>>>>>>> 9474e39ceaeefb982bc4e35840da32a1c175325c
     var timestamp = Date.now();
     var keyword = {
       'word': word,
