@@ -10,11 +10,8 @@ module.exports = function(app) {
   var word_queue = [];
 
   app.post('/keyword', function(request, response) {
-    var word = request.word;
-    console.log(request.params)
-    console.log(request.body);
-    console.log('WORDDDDDDDDDDDD!!!!!!!!!!!');
-    var frequency = request.frequency;
+    var word = 'sadness';//request.word;
+    var frequency = '100'; //request.frequency;
     var timestamp = Date.now();
     var keyword = {
       'word': word,
@@ -26,19 +23,22 @@ module.exports = function(app) {
     if (STATUS) {
       STATUS = false;
       var query = word_queue[0].word;
-      var track_id;
-      var track_spotify_id;
-      var track_length;
-      var lyrics;
-      var query_time;
+
+      // var track_id;
+      // var track_spotify_id;
+      // var track_length;
+      // var lyrics;
+      // var query_time;
 
       // get track_id, track_spotify_id, track_length
       track_callback = function(response) {
-        track_id = response.body.track_list[0].track_id;
-        track_spotify_id = response.body.track_list[0].track_spotify_id;
-        track_length = response.body.track_list[0].track_length;
-        console.log(track_id);
+        var track_id = response.body.track_list[0].track_id;
+        var track_spotify_id = response.body.track_list[0].track_spotify_id;
+        var track_length = response.body.track_list[0].track_length;
       }
+
+// console.log(track_id);
+// console.log(track_spotify_id);
 
       var path = TRACK_SEARCH_PATH + 'q_lyrics=' + query + '&f_has_lyrics=1&format=json&apikey=' + API_KEY;
       var options = {
