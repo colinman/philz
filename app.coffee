@@ -7,17 +7,13 @@ env = require 'node-env-file'
 env __dirname + '/.env'
 
 # Spotify secrets
-client_id = process.env.client_id
 client_secret = process.env.client_secret
-redirect_uri = 'http://localhost:8888/callback'
-
-console.log client_id
 
 app = module.exports = express()
 
 app.use(express.static(__dirname + '/public'))
 
-require('spotify')(app)
+require('./spotify')(app, (token) -> console.log token)
 
 app.get '/testhello', (req, res) -> res.send test:'test'
 
