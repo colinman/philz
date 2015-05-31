@@ -12,6 +12,7 @@
     "better-console": "^0.2.4",
     "colors": "^1.1.0",
     "google-speech-api": "^1.1.1",
+    "moment": "^2.10.3",
     "node-env-file": "^0.1.7",
     "stopwords": "0.0.4",
     "underscore": "^1.8.3",

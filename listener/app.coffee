@@ -6,6 +6,7 @@ unirest = require 'unirest'
 colors = require 'colors'
 console = require 'better-console'
 _ = require 'underscore'
+moment = require 'moment'
 
 server = 'http://localhost:8888/keyword/'
 
@@ -14,6 +15,7 @@ env = require 'node-env-file'
 env __dirname + '/.env'
 
 shouldWait = false
+listening = false
 
 duration = 5 # seconds of recording
 high_t = 800
@@ -30,13 +32,17 @@ opts =
   key: process.env.google_api_key
 
 listen = ->
+  if listening then return
   if shouldWait then return
-  
+
+  listening = true
   child = recordFile()
   console.log 'listening and transcribing...'
   child.stdout.pipe(speech(opts, (err, results) ->
     sentence = results?[0]?.result?[0]?.alternative?[0]?.transcript
-    if !sentence then return listen()
+    if !sentence
+      listening = false
+      return listen()
 
     console.log "Finding keywords in #{sentence}"
     for word in sentence.split(" ")
@@ -48,8 +54,11 @@ listen = ->
           .header("Accept", "application/json")
           .end (used) ->
             if used?.body?
-              unirest.get("http://localhost:8888/play?uri=#{used.body.track_spotify_id}&start=#{used.body.query_time}").header("Accept", "application/json").end()
+              time = moment.utc(used.body.query_time * 1000).format("mm:ss")
+              unirest.get("http://localhost:8888/play?id=#{used.body.track_spotify_id}&start=#{time}").header("Accept", "application/json").end()
+              console.log "Sent request to play #{used.body.track_spotify_id} at #{time}"
               setBGColor 'bgGreen'
+    listening = false              
     listen()
   ))
 

@@ -62,18 +62,13 @@ module.exports = (app, cb) ->
       require('./queueManager').removeFromPlaylist(req, res, access_token, refresh_token, req.query)
 
   app.get '/play', (req, res) ->
-    # options =
-    #   url: "https://api.spotify.com/v1/tracks/#{req.query['id']}"
-    #   headers:
-    #     'Accept': 'application/json'
-    #     'Authorization': "Bearer #{access_token}"
-    #   json: true
-    # request.get options, (error, response, body) ->
+
+    spawn 'spotify', ['stop']
     spawn 'spotify', ['play', "spotify:track:#{req.query['id']}"]
     spawn "spotify", ["jump", req.query['start']]
 
     setTimeout ->
-      spawn('spotify', ['play', "spotify:user:#{process.env.spotify_owner_id}:playlist:#{process.env['spotify_playlist_id']}"])      
+      spawn('spotify', ['play', "spotify:user:#{process.env.spotify_owner_id}:playlist:#{process.env['spotify_playlist_id']}"])
     , 10000
 
   app.get '/search', (req, res) ->
@@ -94,5 +89,3 @@ module.exports = (app, cb) ->
 
   app.get '/callback', (req, res) ->
     callback req, res, cb
-
-
