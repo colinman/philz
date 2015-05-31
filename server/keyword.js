@@ -52,7 +52,8 @@ module.exports = function(app) {
               lyrics_words = lyrics_words.filter(Boolean);
 
               var index = lyrics_words.indexOf(query);
-              var query_time = track_length / lyrics_words.length * index;
+              var query_time = 0;
+              if (index > 0) var query_time = track_length / lyrics_words.length * index;
 
               // return track_spotify_id, time
               response.json(200, {'track_spotify_id': track_spotify_id, 'query_time': query_time});
