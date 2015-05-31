@@ -7,13 +7,14 @@ var LYRICS_SEARCH_PATH = '/ws/1.1/track.lyrics.get?';
 var STATUS = true;
 
 module.exports = function(app) {
-    console.log('called');
   var word_queue = [];
 
   app.post('/keyword', function(request, response) {
-    console.log('post');
-    var word = request.body.word;
-    var frequency = request.body.frequency;
+    var word = request.word;
+    console.log(request.params)
+    console.log(request.body);
+    console.log('WORDDDDDDDDDDDD!!!!!!!!!!!');
+    var frequency = request.frequency;
     var timestamp = Date.now();
     var keyword = {
       'word': word,
@@ -36,6 +37,7 @@ module.exports = function(app) {
         track_id = response.body.track_list[0].track_id;
         track_spotify_id = response.body.track_list[0].track_spotify_id;
         track_length = response.body.track_list[0].track_length;
+        console.log(track_id);
       }
 
       var path = TRACK_SEARCH_PATH + 'q_lyrics=' + query + '&f_has_lyrics=1&format=json&apikey=' + API_KEY;
@@ -48,9 +50,10 @@ module.exports = function(app) {
       // get lyrics
       lyrics_callback = function(response) {
         lyrics = response.body.lyrics.lyrics_body;
+        console.log(lyrics);
       }
 
-      var path = LYRICS_SEARCH_PATH + 'track_id=' + id + '&format=json';
+      var path = LYRICS_SEARCH_PATH + 'track_id=' + track_id + '&format=json';
       var options = {
         'host': HOST,
         'path': path
