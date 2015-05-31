@@ -1,13 +1,20 @@
 sys = require 'sys'
 spawn = require('child_process').spawn
 speech = require 'google-speech-api'
+stopwords = require('stopwords').english
+unirest = require 'unirest'
+_ = require 'underscore'
 
 # Environment variables
 env = require 'node-env-file'
 env __dirname + '/.env'
 
-recordFile = (num) ->
-  child = spawn "./sox", ["-dp", "trim", "0", "2"]
+duration = 5 # seconds of recording
+high_t = 800
+low_t = 15 # words per million
+
+recordFile = ->
+  child = spawn "./sox", ["-dp", "trim", "0", "#{duration}"]
   child.stderr.on 'data', (data) -> console.log "STDERR: #{data}"
   child.on 'exit', (code) -> console.log "Exited with code #{code}"
   child
@@ -16,15 +23,27 @@ opts =
   filetype: 'wav'
   key: process.env.google_api_key
 
-listen = (num) ->
-  child = recordFile(num)
+listen = ->
+  child = recordFile()
+  console.log 'listening and transcribing...'
   child.stdout.pipe(speech(opts, (err, results) ->
-    console.log 'done!'
-    console.log err
-    console.log results))    
-  # setTimeout ->
-  #   console.log "Recording recording#{num}.wav done"
-  #   listen(++num)
-  # , 10000
+    sentence = results?[0]?.result?[0]?.alternative?[0]?.transcript
+    console.log "Finding keywords in #{sentence}"
+    for word in sentence.split(" ")
+      isKeyword word, (result) -> if result then console.log "KEYWORD!: #{result}"    
+  ))
 
-listen(0)
+isKeyword = (word, cb) ->
+  if _.contains stopwords, word then return cb false
+  unirest.get("https://wordsapiv1.p.mashape.com/words/#{word}/frequency")
+  .header("X-Mashape-Key", process.env.mashape_key)
+  .header("Accept", "application/json")
+  .end (result) ->
+    if result.status != 200
+      console.log "ERROR WITH WORDS API WITH WORD #{word}"
+      return cb false
+    else
+      frequency = result.body?.frequency?.perMillion
+      cb if frequency > low_t and frequency < high_t then word else false
+
+listen()
