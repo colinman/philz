@@ -12,54 +12,55 @@
   
     var songs = [];
 
-    // PostModel.getQueue(function(playlist) {
-    //   $playlist.html(renderPlaylist({songs: playlist}));
-    // });
+    PostModel.getQueue(function(error, playlist) {
+      $playlist.html(renderPlaylist({songs: playlist}));
+      console.log(playlist);
+    });
 
 
-    songs.push(
-      {
-        track_name: 'song',
-        artists: ['Person1'],
-        album: 'album',
-        duration_ms: '32',
-        image: 'alkdfalk.jpg'
-      }
-    );
+    // songs.push(
+    //   {
+    //     track_name: 'song',
+    //     artists: ['Person1'],
+    //     album: 'album',
+    //     duration_ms: '32',
+    //     image: 'alkdfalk.jpg'
+    //   }
+    // );
 
-    for (var i = 0; i < 20; i++) {
-      songs.push(
-        {
-          track_name: 'song2',
-          artists: ['Person2', 'Person3'], // fix this
-          album: 'album2',
-          duration_ms: '35',
-          image: 'askdfj.jpg'
-        }
-      );
-    }
+    // for (var i = 0; i < 20; i++) {
+    //   songs.push(
+    //     {
+    //       track_name: 'song2',
+    //       artists: ['Person2', 'Person3'], // fix this
+    //       album: 'album2',
+    //       duration_ms: '35',
+    //       image: 'askdfj.jpg'
+    //     }
+    //   );
+    // }
 
-    $playlist.html(renderPlaylist({songs: songs}));
+    // $playlist.html(renderPlaylist({songs: songs}));
 
-    // setInterval(function(){
+    setInterval(function(){
 
-    //   PostModel.getQueue(function(playlist) {
-    //     $playlist.html(renderPlaylist({songs: songs}));
-    //   });
-    //   // $current.html(renderCurrent(song)); figure out how to get current song
-    //   console.log('hi');
-    // }, 3000);
+      PostModel.getQueue(function(error, playlist) {
+        $playlist.html(renderPlaylist({songs: playlist}));
+      });
+      // $current.html(renderCurrent(song)); figure out how to get current song
+      console.log('hi');
+    }, 3000);
 
 
   };
 
   NewsfeedView.renderCurrent = function($current) {
     var song = {
-      track_name: 'song',
-      artists: ['Person1'],
-      album: 'album',
-      duration_ms: '32',
-      image: 'http://www.tomlohrmannmusic.com/blog/wp-content/uploads/2012/09/muse-the-resistance-album-artwork.jpeg'
+      track_name: 'Sunday Morning',
+      artists: ['Maroon 5'],
+      album: 'Songs About Jane',
+      duration_ms: '244866',
+      image: 'http://upload.wikimedia.org/wikipedia/en/b/be/Maroon_5_-_Songs_About_Jane.png'
     };
 
     $current.html(renderCurrent(song));

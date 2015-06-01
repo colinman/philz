@@ -70,6 +70,7 @@ module.exports = (app, cb) ->
 
   app.get '/play', (req, res) ->
 
+    console.log 'received play request'
     spawn 'spotify', ['stop']
     spawn 'spotify', ['play', "spotify:track:#{req.query['id']}"]
     spawn "spotify", ["jump", req.query['start']]
