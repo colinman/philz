@@ -8,7 +8,7 @@ console = require 'better-console'
 _ = require 'underscore'
 moment = require 'moment'
 
-host = '192.168.1.32'
+host = 'localhost'
 server = "http://#{host}:8888/keyword/"
 
 # Environment variables

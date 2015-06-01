@@ -5,10 +5,11 @@ sys = require 'sys'
 spawn = require('child_process').spawn
 
 module.exports = (app, cb) ->
+  host = 'localhost'
   # Spotify secrets
   client_id = process.env.spotify_client_id
   client_secret = process.env.spotify_client_secret
-  redirect_uri = 'http://192.168.1.32:8888/callback'
+  redirect_uri = "http://#{host}:8888/callback"
   access_token = null
   refresh_token = null
   generateRandomString = (length) ->
